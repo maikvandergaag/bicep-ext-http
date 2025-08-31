@@ -1,0 +1,11 @@
+{
+  "experimentalFeaturesEnabled": {
+    "localDeploy": true,
+    "extensibility": true
+  },
+  "extensions": {
+    "http": "./extension-publish/bicep-ext-http",
+    "httpRegistry": "br:azcrbicepregistryiacprd.azurecr.io/extensions/bicep-ext-http:1.0.0"
+  },
+  "implicitExtensions": []
+}

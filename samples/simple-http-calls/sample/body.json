@@ -1,0 +1,7 @@
+{
+  "name": "Example User",
+  "age": 25,
+  "email": "user@example.com",
+  "active": true,
+  "tags": ["developer", "bicep", "azure"]
+}
