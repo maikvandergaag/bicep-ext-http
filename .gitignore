@@ -15,8 +15,8 @@
 *.userprefs
 
 extension-publish/*
-
 !extension-publish/.gitkeep
+
 # Mono auto generated files
 mono_crash.*
 
