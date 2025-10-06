@@ -4,11 +4,13 @@ extension http
 var callBody = loadTextContent('sample/body.json')
 
 resource getHttp 'httpcall' = {
+  name: 'getcall'
   url: 'https://bicep-local.free.beeceptor.com'
   method: 'Get'
 }
 
 resource postHttp 'httpcall' = {
+  name: 'postcall'
   url: 'https://bicep-local.free.beeceptor.com'
   method: 'Post'
   headers:[
@@ -18,6 +20,7 @@ resource postHttp 'httpcall' = {
 }
 
 resource deleteHttp 'httpcall' = {
+  name: 'deletecall'
   url: 'https://bicep-local.free.beeceptor.com/1'
   method: 'Delete'
 }

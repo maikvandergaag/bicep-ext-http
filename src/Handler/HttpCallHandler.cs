@@ -51,7 +51,7 @@ namespace Bicep.Ext.Http.Handler {
 
         protected override HttpCallIdentifiers GetIdentifiers(HttpCall properties)
             => new() {
-                Url = properties.Url,
+                Name = properties.Name,
             };
     }
 }

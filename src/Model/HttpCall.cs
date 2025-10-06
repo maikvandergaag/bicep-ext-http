@@ -5,6 +5,11 @@ using System.Text.Json.Serialization;
 namespace Bicep.Ext.Http.Model {
     [ResourceType("httpcall")]
     public class HttpCall : HttpCallIdentifiers {
+
+        [TypeProperty("The Http Call Url", ObjectTypePropertyFlags.Required)]
+        [JsonPropertyName("url")]
+        public required string Url { get; set; }
+
         [TypeProperty("The HTTP method to use", ObjectTypePropertyFlags.Required)]
         [JsonConverter(typeof(JsonStringEnumConverter))]
         [JsonPropertyName("method")]
