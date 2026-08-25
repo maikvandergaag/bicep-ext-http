@@ -85,7 +85,7 @@ jobs:
       - name: Publish Extension
         run: |
           target="br:ghcr.io/${{ github.repository }}:$VERSION"
-          bash ../scripts/publish.ps1 -Target "$target" "$VERSION"
+          bash ../scripts/publish.ps1 -Target "$target" -Tag "$VERSION"
 
           echo "Published extension \`$target\`." >> $GITHUB_STEP_SUMMARY
         working-directory: ./samples
