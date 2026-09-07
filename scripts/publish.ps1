@@ -33,7 +33,7 @@ param(
   [Parameter(ParameterSetName = 'Default', HelpMessage = "The name of the extension.", Mandatory = $false)]
   [string]$ExtensionName = "bicep-ext-http",
   [Parameter(ParameterSetName = 'Default', HelpMessage = "The source folder for the extension.", Mandatory = $false)]
-  [string]$SourceFolder = "/src",
+  [string]$SourceFolder = "src",
   [Parameter(ParameterSetName = 'Registry', HelpMessage = "Whether to publish to a container registry.", Mandatory = $false)]
   [switch]$Registry,
   [Parameter(ParameterSetName = 'Registry', HelpMessage = "The URL of the container registry.", Mandatory = $true)]
@@ -65,7 +65,7 @@ BEGIN {
   }
   else {
     Write-Host "## No target specified, using default (extension-publish)."
-    $Target = Join-Path $projectFolder "/extension-publish/$ExtensionName"
+    $Target = Join-Path $projectFolder "extension-publish/$ExtensionName"
     Write-Host "## Using the following target: $Target"
   }
 
@@ -83,31 +83,45 @@ BEGIN {
   Write-Host ""
 }
 PROCESS {
+  $publishSucceeded = $false
 
-  Write-Host "# Starting the publish process for the Bicep extension."
+  try {
+    Write-Host "# Starting the publish process for the Bicep extension."
 
-  Write-Host "# Building the extensions for multiple platforms."
-  dotnet publish --configuration Release $root -r osx-arm64 $Tag 
-  dotnet publish --configuration Release $root -r linux-x64 $Tag
-  dotnet publish --configuration Release $root -r linux-arm64 $Tag
-  dotnet publish --configuration Release $root -r win-x64 $Tag
-  dotnet publish --configuration Release $root -r win-arm64 $Tag
+    Write-Host "# Building the extensions for multiple platforms."
+    foreach ($rid in @("osx-arm64", "linux-x64", "linux-arm64", "win-x64", "win-arm64")) {
+      & dotnet publish --configuration Release "$root" -r $rid
+      if ($LASTEXITCODE -ne 0) {
+        throw "dotnet publish failed for RID '$rid'."
+      }
+    }
 
-  Write-Host "# Publishing the extension to the specified target."
-  bicep publish-extension --bin-osx-arm64 $root/bin/release/net9.0/osx-arm64/publish/$ExtensionName `
-    --bin-linux-x64 $root/bin/release/net9.0/linux-x64/publish/$ExtensionName `
-    --bin-linux-arm64 $root/bin/release/net9.0/linux-arm64/publish/$ExtensionName `
-    --bin-win-x64 $root/bin/release/net9.0/win-x64/publish/$ExtensionName.exe `
-    --bin-win-arm64 $root/bin/release/net9.0/win-arm64/publish/$ExtensionName.exe `
-    --target $Target `
-    --force
-}
-END {
-  Write-Host ""
-  Write-Host "######################################################################"
-  Write-Host "##"
-  Write-Host "## Publish process completed."
-  Write-Host "##"
-  Write-Host "######################################################################"
+    Write-Host "# Publishing the extension to the specified target."
+    & bicep publish-extension --bin-osx-arm64 $root/bin/release/net9.0/osx-arm64/publish/$ExtensionName `
+      --bin-linux-x64 $root/bin/release/net9.0/linux-x64/publish/$ExtensionName `
+      --bin-linux-arm64 $root/bin/release/net9.0/linux-arm64/publish/$ExtensionName `
+      --bin-win-x64 $root/bin/release/net9.0/win-x64/publish/$ExtensionName.exe `
+      --bin-win-arm64 $root/bin/release/net9.0/win-arm64/publish/$ExtensionName.exe `
+      --target $Target `
+      --force
+    if ($LASTEXITCODE -ne 0) {
+      throw "bicep publish-extension failed for '$Target'."
+    }
+
+    $publishSucceeded = $true
+  }
+  catch {
+    Write-Error "Publish failed: $($_.Exception.Message)"
+    exit 1
+  }
+
+  if ($publishSucceeded) {
+    Write-Host ""
+    Write-Host "######################################################################"
+    Write-Host "##"
+    Write-Host "## Publish process completed."
+    Write-Host "##"
+    Write-Host "######################################################################"
+  }
 }
 
