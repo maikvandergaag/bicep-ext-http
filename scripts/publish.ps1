@@ -87,14 +87,18 @@ PROCESS {
   Write-Host "# Starting the publish process for the Bicep extension."
 
   Write-Host "# Building the extensions for multiple platforms."
-  dotnet publish --configuration release -r osx-arm64 $root
-  dotnet publish --configuration release -r linux-x64 $root
-  dotnet publish --configuration release -r win-x64 $root
+  dotnet publish --configuration Release $root -r osx-arm64 $Tag 
+  dotnet publish --configuration Release $root -r linux-x64 $Tag
+  dotnet publish --configuration Release $root -r linux-arm64 $Tag
+  dotnet publish --configuration Release $root -r win-x64 $Tag
+  dotnet publish --configuration Release $root -r win-arm64 $Tag
 
   Write-Host "# Publishing the extension to the specified target."
   bicep publish-extension --bin-osx-arm64 $root/bin/release/net9.0/osx-arm64/publish/$ExtensionName `
     --bin-linux-x64 $root/bin/release/net9.0/linux-x64/publish/$ExtensionName `
+    --bin-linux-arm64 $root/bin/release/net9.0/linux-arm64/publish/$ExtensionName `
     --bin-win-x64 $root/bin/release/net9.0/win-x64/publish/$ExtensionName.exe `
+    --bin-win-arm64 $root/bin/release/net9.0/win-arm64/publish/$ExtensionName.exe `
     --target $Target `
     --force
 }
