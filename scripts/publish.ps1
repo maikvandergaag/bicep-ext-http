@@ -35,7 +35,7 @@ param(
   [Parameter(ParameterSetName = 'Default', HelpMessage = "The source folder for the extension.", Mandatory = $false)]
   [string]$SourceFolder = "/src",
   [Parameter(ParameterSetName = 'Registry', HelpMessage = "Whether to publish to a container registry.", Mandatory = $false)]
-  [bool]$Registry = $false,
+  [switch]$Registry,
   [Parameter(ParameterSetName = 'Registry', HelpMessage = "The URL of the container registry.", Mandatory = $true)]
   [string]$RegistryUrl,
   [Parameter(ParameterSetName = 'Registry', HelpMessage = "The tag for the container image.", Mandatory = $true)]

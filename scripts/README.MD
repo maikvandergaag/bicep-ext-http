@@ -31,7 +31,7 @@ Publish locally:
 
 Publish to a container registry:
 ```powershell
-.\publish.ps1 -Registry $true -RegistryUrl "https://myregistry.azurecr.io" -Tag "v1.0.0" -Repository "bicep-ext-http"
+.\publish.ps1 -Registry -RegistryUrl "myregistry.azurecr.io" -Tag "v1.0.0" -Repository "bicep-ext-http"
 ```
 
 ### Notes
