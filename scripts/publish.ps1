@@ -92,7 +92,7 @@ PROCESS {
   dotnet publish --configuration release -r win-x64 $root
 
   Write-Host "# Publishing the extension to the specified target."
-  D:\bicep-install\bicep.exe publish-extension --bin-osx-arm64 $root/bin/release/net9.0/osx-arm64/publish/$ExtensionName `
+  bicep publish-extension --bin-osx-arm64 $root/bin/release/net9.0/osx-arm64/publish/$ExtensionName `
     --bin-linux-x64 $root/bin/release/net9.0/linux-x64/publish/$ExtensionName `
     --bin-win-x64 $root/bin/release/net9.0/win-x64/publish/$ExtensionName.exe `
     --target $Target `

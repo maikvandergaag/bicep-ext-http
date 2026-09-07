@@ -85,7 +85,11 @@ jobs:
       - name: Publish Extension
         run: |
           target="br:ghcr.io/${{ github.repository }}:$VERSION"
-          pwsh ../scripts/publish.ps1 -Target "$target" -Tag "$VERSION"
+           pwsh ../scripts/publish.ps1 \
+            -Registry '$true' \
+            -RegistryUrl "ghcr.io" \
+            -Repository "${{ github.repository }}" \
+            -Tag "$VERSION"
 
           echo "Published extension \`$target\`." >> $GITHUB_STEP_SUMMARY
         working-directory: ./samples
