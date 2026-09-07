@@ -25,9 +25,7 @@ The tag for the bicep extension.
 
 .PARAMETER Repository
 The repository for the container image. (default: bicep-ext-http)
-
 #>
-
 [CmdletBinding(DefaultParameterSetName = 'Default')]
 param(
   [Parameter(ParameterSetName = 'Default', HelpMessage = "The target to publish the extension to.", Mandatory = $false)]
