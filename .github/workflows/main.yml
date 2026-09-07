@@ -86,7 +86,7 @@ jobs:
         run: |
           target="br:ghcr.io/${{ github.repository }}:$VERSION"
            pwsh ../scripts/publish.ps1 \
-            -Registry '$true' \
+            -Registry 1 \
             -RegistryUrl "ghcr.io" \
             -Repository "${{ github.repository }}" \
             -Tag "$VERSION"
