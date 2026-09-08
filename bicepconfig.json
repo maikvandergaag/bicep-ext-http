@@ -1,7 +1,8 @@
 {
   "experimentalFeaturesEnabled": {
     "localDeploy": true,
-    "extensibility": true
+    "extensibility": true,
+    "ociEnabled": true
   },
   "extensions": {
     "http": "./extension-publish/bicep-ext-http",
